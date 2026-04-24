@@ -3,112 +3,706 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Digital Product Bulk Uploader for WooCommerce</title>
-
+<title>Bulk Uploader — WooCommerce Digital Products</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #f5f7fb;
-    color: #1a1a1a;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.container {
-    max-width: 900px;
-    margin: 60px auto;
-    padding: 0 20px;
-}
+  :root {
+    --bg: #F7F5F0;
+    --ink: #1A1814;
+    --ink-soft: #6B6760;
+    --accent: #2A5F3F;
+    --accent-light: #D6EAE0;
+    --border: #E0DDD8;
+    --white: #FFFFFF;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
 
-.card {
-    background: white;
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
+  html { scroll-behavior: smooth; }
 
-h1 {
-    margin-top: 0;
-    font-size: 32px;
-}
-
-h2 {
-    margin-top: 40px;
-    font-size: 20px;
-}
-
-p {
-    color: #555;
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
     line-height: 1.6;
-}
+    overflow-x: hidden;
+  }
 
-ul {
-    padding-left: 20px;
-}
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(247,245,240,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .nav-pill {
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-pill:hover { background: var(--accent); }
 
-li {
-    margin-bottom: 8px;
-}
-
-.badge {
-    display: inline-block;
-    padding: 6px 12px;
-    background: #e8f0ff;
-    color: #3b6cff;
-    border-radius: 6px;
-    font-size: 13px;
-    margin-bottom: 15px;
-}
-
-.footer {
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 8rem 2rem 5rem;
     text-align: center;
-    margin-top: 40px;
-    font-size: 13px;
-    color: #888;
-}
-</style>
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 110%, rgba(42,95,63,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 20%, rgba(42,95,63,0.06) 0%, transparent 60%);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; }
 
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.1s forwards;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    margin-top: 1.75rem;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin-left: auto; margin-right: auto;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 2.75rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s forwards;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-ghost {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--ink); }
+
+  /* ── DEMO VISUAL ── */
+  .demo-wrap {
+    margin-top: 4rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.65s forwards;
+  }
+  .demo-card {
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .demo-bar {
+    background: #F0EEE9;
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    display: flex; align-items: center; gap: 0.45rem;
+  }
+  .demo-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .demo-dot:nth-child(1) { background: #FF6058; }
+  .demo-dot:nth-child(2) { background: #FFBD2E; }
+  .demo-dot:nth-child(3) { background: #28CA41; }
+  .demo-title-bar {
+    margin-left: auto; margin-right: auto;
+    font-family: var(--mono); font-size: 0.7rem;
+    color: var(--ink-soft);
+  }
+  .demo-body { padding: 1.5rem; }
+  .demo-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .demo-field {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+  }
+  .demo-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .demo-value { font-size: 0.85rem; color: var(--ink); }
+  .demo-files {
+    background: var(--bg);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  .demo-file-row {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.82rem;
+  }
+  .demo-file-row:last-child { border-bottom: none; }
+  .file-icon {
+    width: 28px; height: 28px;
+    background: var(--accent-light);
+    border-radius: 6px;
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 0.55rem;
+    color: var(--accent); font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .file-name { flex: 1; color: var(--ink); }
+  .file-status {
+    font-family: var(--mono); font-size: 0.68rem;
+    color: var(--accent);
+  }
+  .demo-btn {
+    width: 100%;
+    background: var(--ink);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 0.85rem;
+    font-size: 0.88rem;
+    font-family: var(--sans);
+    font-weight: 500;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 6rem 2rem; }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .steps-section {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .steps-inner { max-width: 960px; margin: 0 auto; }
+  .steps-header { max-width: 500px; margin-bottom: 4rem; }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+  }
+  .step {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .step.visible { opacity: 1; transform: none; }
+  .step-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+  }
+  .step-icon {
+    width: 44px; height: 44px;
+    background: var(--accent-light);
+    border-radius: 10px;
+    display: grid; place-items: center;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+  .step h3 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .step p { font-size: 0.85rem; color: var(--ink-soft); }
+
+  /* ── FEATURES ── */
+  .features-inner { max-width: 960px; margin: 0 auto; }
+  .features-top {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    flex-wrap: wrap; gap: 2rem;
+    margin-bottom: 3.5rem;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .feat {
+    background: var(--bg);
+    padding: 1.75rem;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.5s, transform 0.5s, background 0.2s;
+  }
+  .feat.visible { opacity: 1; transform: none; }
+  .feat:hover { background: var(--white); }
+  .feat-icon { font-size: 1.4rem; margin-bottom: 1rem; }
+  .feat h3 { font-size: 0.92rem; font-weight: 500; margin-bottom: 0.4rem; }
+  .feat p { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.55; }
+
+  /* ── FILE TYPES ── */
+  .filetypes-section {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .filetypes-inner { max-width: 960px; margin: 0 auto; }
+  .filetypes-section .section-label { color: #6DBF8F; }
+  .filetypes-section h2 { color: var(--bg); }
+  .filetypes-sub { color: rgba(247,245,240,0.6); margin-top: 0.75rem; font-size: 0.95rem; }
+  .types-grid {
+    margin-top: 3rem;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem;
+  }
+  .type-group h4 {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(247,245,240,0.45);
+    margin-bottom: 1rem;
+  }
+  .type-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .chip {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid rgba(247,245,240,0.15);
+    color: rgba(247,245,240,0.75);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .chip:hover { border-color: #6DBF8F; color: #6DBF8F; }
+
+  /* ── FAQ ── */
+  .faq-inner { max-width: 680px; margin: 0 auto; }
+  .faq-header { margin-bottom: 3rem; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 0;
+  }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    gap: 1rem;
+    user-select: none;
+  }
+  .faq-q .arrow {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    transition: transform 0.25s, background 0.2s;
+    font-size: 0.75rem;
+  }
+  .faq-item.open .faq-q .arrow { transform: rotate(45deg); background: var(--accent); border-color: var(--accent); color: white; }
+  .faq-a {
+    display: none;
+    padding-top: 0.85rem;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── CTA BAND ── */
+  .cta-band {
+    background: var(--accent);
+    padding: 5rem 2rem;
+    text-align: center;
+    color: white;
+  }
+  .cta-band .section-label { color: rgba(255,255,255,0.6); }
+  .cta-band h2 { color: white; font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1.5rem; }
+  .cta-band p { color: rgba(255,255,255,0.75); max-width: 460px; margin: 0 auto 2.5rem; font-size: 1rem; }
+  .btn-white {
+    display: inline-block;
+    background: white;
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.9rem 2.25rem;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.06em;
+  }
+  .footer-note { font-size: 0.78rem; color: var(--ink-soft); }
+  .gpl {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    background: var(--border);
+    padding: 0.3rem 0.65rem;
+    border-radius: 4px;
+    color: var(--ink-soft);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.25rem; }
+    .types-grid { grid-template-columns: 1fr; }
+    .demo-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
 </head>
 <body>
 
-<div class="container">
-    <div class="card">
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Bulk Uploader ↗ WooCommerce</span>
+  <a href="https://wordpress.org/plugins/" class="nav-pill">Get Plugin</a>
+</nav>
 
-        <div class="badge">WordPress Plugin</div>
-
-        <h1>Digital Product Bulk Uploader for WooCommerce</h1>
-
-        <p>
-            A lightweight tool that allows WooCommerce store owners to create multiple
-            downloadable products in seconds by uploading files and optional matching images.
-        </p>
-
-        <h2>Features</h2>
-        <ul>
-            <li>Bulk upload downloadable product files</li>
-            <li>Automatic product creation</li>
-            <li>Filename-based image matching</li>
-            <li>Shared price, category, and description</li>
-            <li>Draft or publish on import</li>
-            <li>Duplicate protection</li>
-        </ul>
-
-        <h2>How It Works</h2>
-        <p>
-            Upload your product files, optionally upload matching images with the same names,
-            set shared options, and import. Products are created automatically using the file names.
-        </p>
-
-        <h2>Availability</h2>
-        <p>
-            This plugin is currently under review for the WordPress Plugin Directory.
-        </p>
-
-        <div class="footer">
-            Built by Diana Hakobyan
-        </div>
-
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Free WordPress Plugin</div>
+    <h1>Upload digital products<br><em>in bulk.</em></h1>
+    <p class="hero-sub">Stop creating products one by one. Drop your files, set shared settings, and import dozens of downloadable WooCommerce products in a single click.</p>
+    <div class="hero-cta">
+      <a href="https://wordpress.org/plugins/" class="btn-primary">Install Free Plugin →</a>
+      <a href="#how-it-works" class="btn-ghost">See how it works ↓</a>
     </div>
-</div>
+    <div class="demo-wrap">
+      <div class="demo-card">
+        <div class="demo-bar">
+          <div class="demo-dot"></div><div class="demo-dot"></div><div class="demo-dot"></div>
+          <span class="demo-title-bar">WooCommerce › Bulk Uploader</span>
+        </div>
+        <div class="demo-body">
+          <div class="demo-row">
+            <div class="demo-field">
+              <span class="demo-label">Price</span>
+              <span class="demo-value">$19.00</span>
+            </div>
+            <div class="demo-field">
+              <span class="demo-label">Status</span>
+              <span class="demo-value">Publish</span>
+            </div>
+          </div>
+          <div class="demo-files">
+            <div class="demo-file-row">
+              <div class="file-icon">PDF</div>
+              <span class="file-name">watercolor-guide.pdf</span>
+              <span class="file-status">✓ matched</span>
+            </div>
+            <div class="demo-file-row">
+              <div class="file-icon">ZIP</div>
+              <span class="file-name">icon-pack-v2.zip</span>
+              <span class="file-status">✓ matched</span>
+            </div>
+            <div class="demo-file-row">
+              <div class="file-icon">MP3</div>
+              <span class="file-name">ambient-loops.mp3</span>
+              <span class="file-status">+ new</span>
+            </div>
+          </div>
+          <button class="demo-btn">⬆ Import 3 Products</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- HOW IT WORKS -->
+<section class="steps-section" id="how-it-works">
+  <div class="steps-inner">
+    <div class="steps-header">
+      <div class="section-label">How it works</div>
+      <h2>Five steps from files to store.</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">📁</div>
+        <h3>Upload product files</h3>
+        <p>Select one or many files — PDFs, ZIPs, MP3s, and more.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">🖼</div>
+        <h3>Add matching images</h3>
+        <p>Images are auto-matched to files by filename — no manual linking needed.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">⚙️</div>
+        <h3>Set shared settings</h3>
+        <p>One price, one category, one description — applied across the entire batch.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-icon">🚦</div>
+        <h3>Choose publish status</h3>
+        <p>Go live immediately or save as Draft to review first.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-icon">✅</div>
+        <h3>Import & review</h3>
+        <p>Hit import. Get a full summary with per-product results instantly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="features-inner">
+    <div class="features-top">
+      <div>
+        <div class="section-label">Features</div>
+        <h2>Everything you need,<br>nothing you don't.</h2>
+      </div>
+    </div>
+    <div class="features-grid">
+      <div class="feat">
+        <div class="feat-icon">⚡</div>
+        <h3>Bulk import in one click</h3>
+        <p>Create dozens of downloadable products at once instead of one by one.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔗</div>
+        <h3>Auto image matching</h3>
+        <p>Images are paired with product files by filename — even with different cases or separators.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🏷</div>
+        <h3>Auto-generated titles</h3>
+        <p>Product titles are generated cleanly from filenames — no manual entry.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🛡</div>
+        <h3>Duplicate protection</h3>
+        <p>Existing products with matching titles are skipped automatically.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📊</div>
+        <h3>Import summary</h3>
+        <p>Detailed counters and per-product results so you always know what happened.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔒</div>
+        <h3>No external data</h3>
+        <p>Your files and data stay on your server. Nothing is sent to third-party services.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILE TYPES -->
+<section class="filetypes-section">
+  <div class="filetypes-inner">
+    <div class="section-label">Supported formats</div>
+    <h2>Covers every common<br>digital product format.</h2>
+    <p class="filetypes-sub">If you're selling it digitally, it's probably supported.</p>
+    <div class="types-grid">
+      <div class="type-group">
+        <h4>Product files</h4>
+        <div class="type-chips">
+          <span class="chip">PDF</span><span class="chip">ZIP</span><span class="chip">EPUB</span>
+          <span class="chip">TXT</span><span class="chip">DOC</span><span class="chip">DOCX</span>
+          <span class="chip">XLS</span><span class="chip">XLSX</span><span class="chip">PPT</span>
+          <span class="chip">PPTX</span><span class="chip">MP3</span><span class="chip">M4A</span>
+          <span class="chip">WAV</span><span class="chip">MP4</span><span class="chip">MOV</span>
+          <span class="chip">CSV</span><span class="chip">RTF</span><span class="chip">JSON</span>
+        </div>
+      </div>
+      <div class="type-group">
+        <h4>Product images</h4>
+        <div class="type-chips">
+          <span class="chip">JPG</span><span class="chip">JPEG</span><span class="chip">PNG</span>
+          <span class="chip">GIF</span><span class="chip">WEBP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="faq-inner">
+    <div class="faq-header">
+      <div class="section-label">FAQ</div>
+      <h2>Common questions.</h2>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does this plugin require WooCommerce? <span class="arrow">+</span></div>
+      <div class="faq-a">Yes. WooCommerce must be installed and active on your WordPress site. The plugin creates products directly inside WooCommerce.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can images be uploaded in any order? <span class="arrow">+</span></div>
+      <div class="faq-a">Yes. Images are matched by filename, not by upload order. So <code>my-book.jpg</code> matches <code>my-book.pdf</code> regardless of order.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if no image matches a file? <span class="arrow">+</span></div>
+      <div class="faq-a">The product is still created — just without a featured image. You can always add one later from the product editor.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I set different prices per product? <span class="arrow">+</span></div>
+      <div class="faq-a">Not in the current version. A single shared price is applied to all imported products in a batch. Per-product pricing may come in a future update.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Will it overwrite existing products? <span class="arrow">+</span></div>
+      <div class="faq-a">No. If a product with the same title already exists, it is skipped. No existing products are modified or deleted.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I review products before publishing? <span class="arrow">+</span></div>
+      <div class="faq-a">Yes. Choose Draft status before importing and products will be saved as drafts, letting you review and edit each one before going live.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <div class="section-label">Get started</div>
+  <h2>Start uploading in bulk<br><em style="font-family:'Instrument Serif',serif; font-style:italic;">today.</em></h2>
+  <p>Free, lightweight, and built for WooCommerce stores that sell digital products.</p>
+  <a href="https://wordpress.org/plugins/" class="btn-white">Download on WordPress.org →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Bulk Uploader for WooCommerce</span>
+  <span class="footer-note">Requires WooCommerce · WordPress 6.0+ · PHP 7.4+</span>
+  <span class="gpl">GPLv2 or later</span>
+</footer>
+
+<script>
+  // Intersection observer for step/feat animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), e.target.dataset.delay || 0);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.step, .feat').forEach((el, i) => {
+    el.dataset.delay = (i % 4) * 80;
+    observer.observe(el);
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
 </body>
 </html>
