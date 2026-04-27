@@ -3,9 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <title>Bulk Uploader — WooCommerce Digital Products</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -434,6 +431,9 @@
     letter-spacing: 0.06em;
   }
   .footer-note { font-size: 0.78rem; color: var(--ink-soft); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.78rem; color: var(--ink-soft); text-decoration: none; }
+  .footer-links a:hover { color: var(--accent); }
   .gpl {
     font-family: var(--mono);
     font-size: 0.72rem;
@@ -678,6 +678,10 @@
 <!-- FOOTER -->
 <footer>
   <span class="footer-logo">Bulk Uploader for WooCommerce</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="terms.html">Terms &amp; Conditions</a>
+  </div>
   <span class="footer-note">Requires WooCommerce · WordPress 6.0+ · PHP 7.4+</span>
   <span class="gpl">GPLv2 or later</span>
 </footer>

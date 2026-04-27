@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms & Conditions — Bulk Uploader for WooCommerce</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F5F0;
+    --ink: #1A1814;
+    --ink-soft: #6B6760;
+    --accent: #2A5F3F;
+    --accent-light: #D6EAE0;
+    --border: #E0DDD8;
+    --white: #FFFFFF;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(247,245,240,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .nav-logo:hover { opacity: 0.75; }
+  .nav-pill {
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-pill:hover { background: var(--accent); }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding: 9rem 2rem 4rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background: var(--white);
+  }
+  .page-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .page-hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--accent); }
+  .page-meta {
+    margin-top: 1.25rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── LAYOUT ── */
+  .content-wrap {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* ── SIDEBAR TOC ── */
+  .toc {
+    position: sticky;
+    top: 6rem;
+  }
+  .toc-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .toc ul { list-style: none; }
+  .toc li { margin-bottom: 0.1rem; }
+  .toc a {
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    display: block;
+    padding: 0.35rem 0.75rem;
+    border-left: 2px solid var(--border);
+    transition: color 0.2s, border-color 0.2s;
+    line-height: 1.4;
+  }
+  .toc a:hover,
+  .toc a.active {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ── ARTICLE ── */
+  article { min-width: 0; }
+
+  .section-block {
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-block:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+    scroll-margin-top: 6rem;
+  }
+
+  p {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  p:last-child { margin-bottom: 0; }
+
+  p strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  ul.terms-list {
+    list-style: none;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  ul.terms-list li {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    padding-left: 1.25rem;
+    position: relative;
+    line-height: 1.7;
+  }
+  ul.terms-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+  }
+
+  .highlight-box {
+    background: var(--accent-light);
+    border: 1px solid rgba(42,95,63,0.2);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.25rem 0;
+  }
+  .highlight-box p {
+    color: var(--accent);
+    font-size: 0.88rem;
+    margin: 0;
+  }
+  .highlight-box strong { color: var(--accent); }
+
+  .gpl-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--ink);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    margin-top: 0.75rem;
+    text-decoration: none;
+  }
+  .gpl-badge:hover { background: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.06em;
+  }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-note { font-size: 0.78rem; color: var(--ink-soft); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 720px) {
+    nav { padding: 1rem 1.25rem; }
+    .content-wrap {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .toc { position: static; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">← Bulk Uploader ↗ WooCommerce</a>
+  <a href="https://wordpress.org/plugins/" class="nav-pill">Get Plugin</a>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <span class="page-label">Legal</span>
+  <h1>Terms &amp; <em>Conditions</em></h1>
+  <p class="page-meta">Last updated: June 2025 &nbsp;·&nbsp; Plugin version 1.0.0</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content-wrap">
+
+  <!-- TABLE OF CONTENTS -->
+  <aside class="toc">
+    <span class="toc-label">On this page</span>
+    <ul>
+      <li><a href="#acceptance">1. Acceptance</a></li>
+      <li><a href="#license">2. License</a></li>
+      <li><a href="#use">3. Permitted Use</a></li>
+      <li><a href="#requirements">4. Requirements</a></li>
+      <li><a href="#data">5. Data & Privacy</a></li>
+      <li><a href="#disclaimer">6. Disclaimer</a></li>
+      <li><a href="#liability">7. Liability</a></li>
+      <li><a href="#modifications">8. Modifications</a></li>
+      <li><a href="#contact">9. Contact</a></li>
+    </ul>
+  </aside>
+
+  <!-- ARTICLE -->
+  <article>
+
+    <div class="section-block">
+      <p>Please read these Terms and Conditions carefully before installing or using the <strong>Digital Product Bulk Uploader for WooCommerce</strong> plugin (the "Plugin"). By installing, activating, or using the Plugin, you agree to be bound by these terms.</p>
+    </div>
+
+    <div class="section-block" id="acceptance">
+      <span class="section-num">01 — Acceptance</span>
+      <h2>Acceptance of Terms</h2>
+      <p>By downloading, installing, or using the Plugin, you confirm that you have read, understood, and agree to these Terms and Conditions. If you do not agree with any part of these terms, you must not install or use the Plugin.</p>
+      <p>These terms apply to all users of the Plugin, including administrators and any individuals who interact with products imported using the Plugin.</p>
+    </div>
+
+    <div class="section-block" id="license">
+      <span class="section-num">02 — License</span>
+      <h2>Plugin License</h2>
+      <p>The Digital Product Bulk Uploader for WooCommerce is released under the <strong>GNU General Public License v2.0 or later (GPLv2+)</strong>. This means you are free to use, study, share, and modify the Plugin under the terms of that license.</p>
+      <ul class="terms-list">
+        <li>You may use the Plugin on any number of WordPress installations you own or manage.</li>
+        <li>You may modify the Plugin's source code for your own use.</li>
+        <li>If you distribute modified versions, you must do so under the same GPLv2+ license.</li>
+        <li>You may not remove or alter copyright notices in the source code.</li>
+      </ul>
+      <a class="gpl-badge" href="https://www.gnu.org/licenses/gpl-2.0.html" target="_blank" rel="noopener">
+        ↗ Read the GNU GPLv2 License
+      </a>
+    </div>
+
+    <div class="section-block" id="use">
+      <span class="section-num">03 — Permitted Use</span>
+      <h2>Permitted Use</h2>
+      <p>The Plugin is designed solely to assist WordPress and WooCommerce store owners in bulk-creating downloadable digital products. You agree to use the Plugin only for lawful purposes and in a manner consistent with all applicable local, national, and international laws and regulations.</p>
+      <p>You must not use the Plugin to:</p>
+      <ul class="terms-list">
+        <li>Upload, sell, or distribute files that infringe third-party intellectual property rights.</li>
+        <li>Upload files containing malware, viruses, or malicious code.</li>
+        <li>Engage in any fraudulent, deceptive, or unlawful commercial activity.</li>
+        <li>Circumvent security measures of your WordPress installation or WooCommerce store.</li>
+      </ul>
+      <div class="highlight-box">
+        <p><strong>Note:</strong> You are solely responsible for the content of the files you upload and the products you create using this Plugin. The Plugin author accepts no liability for unlawful or infringing use.</p>
+      </div>
+    </div>
+
+    <div class="section-block" id="requirements">
+      <span class="section-num">04 — Requirements</span>
+      <h2>Technical Requirements</h2>
+      <p>To use the Plugin, your environment must meet the following minimum requirements:</p>
+      <ul class="terms-list">
+        <li><strong>WordPress</strong> version 6.0 or later.</li>
+        <li><strong>WooCommerce</strong> installed and active — the Plugin will not function without it.</li>
+        <li><strong>PHP</strong> version 7.4 or later.</li>
+        <li>Sufficient server storage and upload limits to accommodate your product files.</li>
+      </ul>
+      <p>It is your responsibility to ensure your hosting environment meets these requirements. The Plugin author does not guarantee functionality in environments that do not meet these specifications.</p>
+    </div>
+
+    <div class="section-block" id="data">
+      <span class="section-num">05 — Data & Privacy</span>
+      <h2>Data &amp; Privacy</h2>
+      <p>The Plugin does not collect, transmit, or share any personal data or store data externally. All operations — including file uploads, product creation, and import processing — are performed entirely within your own WordPress installation and server.</p>
+      <ul class="terms-list">
+        <li>No data is sent to the Plugin author or any third-party service.</li>
+        <li>No analytics, telemetry, or tracking code is included in the Plugin.</li>
+        <li>The Plugin does not handle payments or checkout processing.</li>
+      </ul>
+      <p>As a store owner using WooCommerce, you remain responsible for your own site's privacy policy and compliance with applicable data protection regulations (such as GDPR or CCPA) with respect to your customers' data.</p>
+    </div>
+
+    <div class="section-block" id="disclaimer">
+      <span class="section-num">06 — Disclaimer</span>
+      <h2>Disclaimer of Warranties</h2>
+      <p>The Plugin is provided <strong>"as is"</strong> and <strong>"as available"</strong>, without warranty of any kind, express or implied. To the fullest extent permitted by law, the Plugin author disclaims all warranties, including but not limited to:</p>
+      <ul class="terms-list">
+        <li>Implied warranties of merchantability or fitness for a particular purpose.</li>
+        <li>Warranties that the Plugin will be uninterrupted, error-free, or free of bugs.</li>
+        <li>Warranties that defects will be corrected or that the Plugin is free of harmful components.</li>
+        <li>Warranties regarding compatibility with future versions of WordPress or WooCommerce.</li>
+      </ul>
+      <p>You use the Plugin at your own risk. Always back up your WordPress installation before installing or updating plugins.</p>
+    </div>
+
+    <div class="section-block" id="liability">
+      <span class="section-num">07 — Liability</span>
+      <h2>Limitation of Liability</h2>
+      <p>To the maximum extent permitted by applicable law, the Plugin author shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use the Plugin, including but not limited to:</p>
+      <ul class="terms-list">
+        <li>Loss of data, revenue, profits, or business.</li>
+        <li>Damage to your WordPress installation, database, or server environment.</li>
+        <li>Issues arising from incompatibility with third-party plugins or themes.</li>
+        <li>Any claims made by your customers related to products created using the Plugin.</li>
+      </ul>
+      <div class="highlight-box">
+        <p><strong>Important:</strong> Always maintain current backups of your WordPress site before importing products in bulk. The Plugin creates new products but does not delete existing ones.</p>
+      </div>
+    </div>
+
+    <div class="section-block" id="modifications">
+      <span class="section-num">08 — Modifications</span>
+      <h2>Modifications to These Terms</h2>
+      <p>The Plugin author reserves the right to update or modify these Terms and Conditions at any time. Changes will be reflected by updating the "Last updated" date at the top of this page.</p>
+      <p>Your continued use of the Plugin after any changes constitutes your acceptance of the revised terms. It is your responsibility to review these terms periodically. Material changes may also be noted in the Plugin's changelog.</p>
+    </div>
+
+    <div class="section-block" id="contact">
+      <span class="section-num">09 — Contact</span>
+      <h2>Contact</h2>
+      <p>If you have questions about these Terms and Conditions, or about the Plugin in general, you can reach out via the WordPress.org plugin support forum.</p>
+      <ul class="terms-list">
+        <li>Plugin support: <strong>WordPress.org › Plugin Support Forum</strong></li>
+        <li>Plugin page: <strong>wordpress.org/plugins/digital-product-bulk-uploader-for-woocommerce</strong></li>
+        <li>Contributor: <strong>diane99</strong></li>
+      </ul>
+    </div>
+
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Bulk Uploader for WooCommerce</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="terms.html">Terms &amp; Conditions</a>
+  </div>
+  <span class="footer-note">Released under GPLv2 or later</span>
+</footer>
+
+<script>
+  // Highlight active TOC link on scroll
+  const sections = document.querySelectorAll('.section-block[id]');
+  const links = document.querySelectorAll('.toc a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
